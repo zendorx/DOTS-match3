@@ -155,6 +155,7 @@ MonoBehaviour:
   cellWidth: 0
   cellHeight: 0
   cellSpace: 0
+  instance: {fileID: 0}
 --- !u!4 &120362462
 Transform:
   m_ObjectHideFlags: 0
@@ -169,6 +170,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &145980813
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 145980815}
+  - component: {fileID: 145980814}
+  m_Layer: 0
+  m_Name: '[SPAWN FROM Mono]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &145980814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145980813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32c5110a3356a47cbb42d5b527346a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 4297240409750383991, guid: 56dd95919369944a9813082056a18d6e, type: 3}
+--- !u!4 &145980815
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145980813}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.3020968, y: 18.149376, z: -5.5658445}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1412311720
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,12 +226,12 @@ GameObject:
   - component: {fileID: 1412311722}
   - component: {fileID: 1412311721}
   m_Layer: 0
-  m_Name: '[JEWELS STATIC]'
+  m_Name: '[JEWELS STATIC] - best'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1412311721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,7 +385,7 @@ GameObject:
   - component: {fileID: 1749387733}
   - component: {fileID: 1749387732}
   m_Layer: 0
-  m_Name: '[JEWELS]'
+  m_Name: '[JEWELS] - dont use'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -425,8 +470,8 @@ Camera:
   m_GameObject: {fileID: 1997457373}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.60817903, g: 0.745283, b: 0.7382884, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -442,8 +487,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 6.55
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -466,10 +511,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1997457373}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.036989897, y: 0.069534525, z: -0.0025800983, w: 0.99689025}
+  m_LocalPosition: {x: 4.01, y: 5.91, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 4.25, y: 7.98, z: 0}

@@ -70,6 +70,7 @@
      <Compile Include="Assets\Match3\JewelPrefabs.cs" />
      <Compile Include="Assets\Match3\JewelStaticPrefabs.cs" />
      <Compile Include="Assets\Match3\SpawnPoint.cs" />
+     <Compile Include="Assets\Match3\SpawnerMono.cs" />
      <Compile Include="Assets\Scenes\MoveSpeedData.cs" />
      <Compile Include="Assets\Scenes\Spawner.cs" />
      <Compile Include="Assets\Scenes\WaveData.cs" />
