@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{DB93FF8C-EA3F-D129-A258-D97EAF0088E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V_Animation", "V_Animation.csproj", "{BC93F7D0-DAC8-02BB-3B2A-1D2A76BB2D5B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DB93FF8C-EA3F-D129-A258-D97EAF0088E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB93FF8C-EA3F-D129-A258-D97EAF0088E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB93FF8C-EA3F-D129-A258-D97EAF0088E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB93FF8C-EA3F-D129-A258-D97EAF0088E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC93F7D0-DAC8-02BB-3B2A-1D2A76BB2D5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC93F7D0-DAC8-02BB-3B2A-1D2A76BB2D5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC93F7D0-DAC8-02BB-3B2A-1D2A76BB2D5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC93F7D0-DAC8-02BB-3B2A-1D2A76BB2D5B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
