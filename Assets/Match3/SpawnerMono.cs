@@ -4,6 +4,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class SpawnerMono : MonoBehaviour
 {
@@ -43,7 +44,13 @@ public class SpawnerMono : MonoBehaviour
         
         em.SetComponentData(e, new Translation
         {
-            Value = position
+            Value = position + new float3(0, 10, 0)
+        });
+
+        em.AddComponentData(e, new FallComponent
+        {
+            position = position,
+            speed = 15 - position.y - Random.Range(0.1f, 0.5f)
         });
     }
     
