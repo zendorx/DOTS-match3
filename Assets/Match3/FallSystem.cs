@@ -41,6 +41,16 @@ public class FallSystem : SystemBase
                 ecb.RemoveComponent<FallComponent>(e);
             }
         }).Run();
-     
+
+        Entities.ForEach((Entity e, in ClickPoint cp) =>
+        {
+            ecb.DestroyEntity(e);
+        }).Run();
+        
+        //for debug
+        Entities.ForEach((Entity e, in JewelSelected cp) =>
+        {
+            ecb.DestroyEntity(e);
+        }).Run();
     }
 }

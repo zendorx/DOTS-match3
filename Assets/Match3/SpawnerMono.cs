@@ -10,9 +10,21 @@ public class SpawnerMono : MonoBehaviour
 {
     [SerializeField] private GameObject prefab;
 
+    public static float spacing = 1.1f;
+
     private Entity entityPrefab;
     private World world;
     private EntityManager em;
+
+    public static float3 IndexToPosition(int x, int y)
+    {
+        return new float3(x * spacing, y * spacing, 0f);
+    }
+
+    public static int2 PositionToIndex(float3 position)
+    {
+        return new int2((int) (position.x / spacing), (int) (position.y / spacing));
+    }
     
     void Start()
     {
@@ -24,22 +36,24 @@ public class SpawnerMono : MonoBehaviour
         entityPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(prefab, settings);
         
         //InstantiateEntity(new float3(1f, 0, 0f));
-        InstantiateGrid(10, 10, 1.1f);
+        InstantiateGrid(10, 10);
     }
 
-    public void InstantiateGrid(int width, int height, float spacing = 1f)
+    public void InstantiateGrid(int width, int height)
     {
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
-                InstantiateEntity(new float3(i * spacing, j * spacing, 0));
+                InstantiateEntity(i, j);
             }
         }
     }
     
-    public void InstantiateEntity(float3 position)
+    public void InstantiateEntity(int x, int y)
     {
+        float3 position = IndexToPosition(x, y);
+        
         Entity e = em.Instantiate(entityPrefab);
         
         em.SetComponentData(e, new Translation
@@ -51,6 +65,12 @@ public class SpawnerMono : MonoBehaviour
         {
             position = position,
             speed = 15 - position.y - Random.Range(0.1f, 0.5f)
+        });
+
+        em.AddComponentData(e, new JewelCell
+        {
+            x = x,
+            y = y
         });
     }
     
