@@ -7,17 +7,14 @@ using UnityEngine;
 
 namespace TD.Components
 {
-    [AlwaysSynchronizeSystem]
-    public class MoveSystem : SystemBase
+    public class AssignMovePositionSystem : SystemBase
     {
-        protected override void OnCreate()
-        {
-            base.OnCreate();
-        }
-
         protected override void OnUpdate()
         {
             var dt = Time.DeltaTime;
+            //var waypointsQuery = GetEntityQuery(ComponentType.ReadOnly<WaypointData>(), 
+            //    ComponentType.ReadOnly<Translation>());
+            
             var translations = GetComponentDataFromEntity<Translation>(true);
             var waypoints = GetComponentDataFromEntity<WaypointData>(true);
             
@@ -30,11 +27,13 @@ namespace TD.Components
                 var dir = posData.Value - targetTranslation.Value;
                 if (math.lengthsq(dir) < math.E)
                 {
-                    wp.entity = waypoints[wp.entity].next;
+                    var next = waypoints[wp.entity].next;
+                    if (next != Entity.Null)
+                        wp.entity = next;
                 }
                 else
                 {
-                    dir = math.normalize(dir) * dt * 5;
+                    dir = math.normalize(dir) * dt * 10;
                     posData.Value = posData.Value - dir;
                 }
             }).Run();
