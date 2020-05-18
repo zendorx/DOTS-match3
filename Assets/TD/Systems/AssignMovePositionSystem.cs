@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace TD.Components
 {
+    [DisableAutoCreation]
     public class AssignMovePositionSystem : SystemBase
     {
         protected override void OnUpdate()

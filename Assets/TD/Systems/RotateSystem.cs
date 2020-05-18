@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace TD.Components
 {
+    [DisableAutoCreation]
     public class RotateSystem : SystemBase
     {
         protected override void OnCreate()

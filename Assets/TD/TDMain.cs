@@ -12,6 +12,8 @@ public class TDMain : MonoBehaviour
 
     public Entity unitEntity;
 
+
+    private World world;
     //private Entity UnitEntity; 
     // Start is called before the first frame update
 
@@ -25,10 +27,28 @@ public class TDMain : MonoBehaviour
         //UnityEntity = ConvertToEntity(UnitPrefab);
         
         var em = World.DefaultGameObjectInjectionWorld.EntityManager;
-        var world = World.DefaultGameObjectInjectionWorld;
+        world = World.DefaultGameObjectInjectionWorld;
 
         GameObjectConversionSettings settings = GameObjectConversionSettings.FromWorld(world, null);
         unitEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(UnitPrefab, settings);
+
+        //entities bug workaround
+        //https://forum.unity.com/threads/invalidoperationexception-object-is-not-initialized-or-has-already-been-destroyed.882484/
+        
+        addSystem<AssignMovePositionSystem>();
+        addSystem<EndReachedSystem>();
+        addSystem<RotateSystem>();
+        addSystem<SpawnSystem>();
+        addSystem<WaypointsMoveSystem>();
+        
+        var ssg = world.GetOrCreateSystem<SimulationSystemGroup>();
+        ssg.SortSystemUpdateList();
+    }
+
+    void addSystem<T>() where T : ComponentSystemBase
+    {
+        var ssg = world.GetOrCreateSystem<SimulationSystemGroup>();
+        ssg.AddSystemToUpdateList(world.GetOrCreateSystem<T>());
     }
 
     // Update is called once per frame

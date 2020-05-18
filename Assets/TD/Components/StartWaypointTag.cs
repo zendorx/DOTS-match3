@@ -9,4 +9,8 @@ namespace TD.Components
     public struct StartWaypointTag : IComponentData
     {
     }
+    
+    public struct ReachedEnd : IComponentData
+    {
+    }
 }

@@ -7,32 +7,35 @@ using UnityEngine;
 
 namespace TD.Components
 {
-    public class WaypointsMoveSystem : SystemBase
-    { protected override void OnUpdate()
+    [DisableAutoCreation]
+    public class WaypointsMoveSystem : MySystem
+    { 
+        protected override void OnUpdate()
         {
             var dt = Time.DeltaTime;
-            //var waypointsQuery = GetEntityQuery(ComponentType.ReadOnly<WaypointData>(), 
-            //    ComponentType.ReadOnly<Translation>());
+            
             
             var translations = GetComponentDataFromEntity<Translation>(true);
             var waypoints = GetComponentDataFromEntity<WaypointData>(true);
-            
-            
+
+
+            var cb = createCommandBuffer();
             
             Entities
                 .WithoutBurst()
-                .ForEach((ref Translation posData, in CurrentWaypointData wp) =>
+                .ForEach((Entity entity, ref Translation posData, in CurrentWaypointData wp) =>
             {
                 var targetTranslation = translations[wp.entity];
                 
-                //if (wp.entity == Entity.Null)
-                //    wp.entity = waypoints.
-
                 var dir = posData.Value - targetTranslation.Value;
                 if (math.lengthsq(dir) < math.E)
                 {
                     var next = waypoints[wp.entity].next;
-                    if (next != Entity.Null)
+                    if (next == Entity.Null)
+                    {
+                        cb.AddComponent(entity, new ReachedEnd());
+                    }
+                    else
                         wp.entity = next;
                 }
                 else
