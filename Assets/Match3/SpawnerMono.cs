@@ -41,6 +41,8 @@ public class SpawnerMono : MonoBehaviour
 
     public void InstantiateGrid(int width, int height)
     {
+        InstantiateFieldEntity(width, height);
+            
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -48,6 +50,17 @@ public class SpawnerMono : MonoBehaviour
                 InstantiateEntity(i, j);
             }
         }
+    }
+
+    public void InstantiateFieldEntity(int width, int height)
+    {
+        Entity e = em.CreateEntity();
+
+        em.AddComponentData(e, new FieldComponent
+        {
+            width = width,
+            height = height
+        });
     }
     
     public void InstantiateEntity(int x, int y)

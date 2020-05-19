@@ -10,3 +10,7 @@ BUILD/
 .idea/
 
 Temp/
+
+Assembly-CSharp.csproj
+
+V_Animation.csproj

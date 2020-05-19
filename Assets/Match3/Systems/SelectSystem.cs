@@ -23,7 +23,7 @@ public class SelectSystem : SystemBase
         
         var ecb = ess.CreateCommandBuffer();
 
-        using (var clickPoints = eq.ToComponentDataArray<ClickPoint>(Allocator.Temp))
+        using (var clickPoints = eq.ToComponentDataArray<ClickPoint>(Allocator.TempJob))
         {
             if (clickPoints.Length == 0)
                 return;
@@ -39,18 +39,7 @@ public class SelectSystem : SystemBase
                 }
                 
             }).Run();
-            
-            Entities.ForEach((Entity e, in ClickPoint cp) =>
-            {
-                ecb.DestroyEntity(e);
-            }).Run();
-        
-            //for debug
-            Entities.ForEach((Entity e, in JewelSelected cp) =>
-            {
-                ecb.DestroyEntity(e);
-            }).Run();
-            
         }
+        
     }
 }
