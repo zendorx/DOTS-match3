@@ -18,12 +18,12 @@ public class SpawnerMono : MonoBehaviour
 
     public static float3 IndexToPosition(int x, int y)
     {
-        return new float3(x * spacing, y * spacing, 0f);
+        return new float3(x * spacing, - y * spacing, 0f);
     }
 
     public static int2 PositionToIndex(float3 position)
     {
-        return new int2((int) (position.x / spacing), (int) (position.y / spacing));
+        return new int2((int) (position.x / spacing), (int) (- position.y / spacing));
     }
     
     void Start()
@@ -47,9 +47,20 @@ public class SpawnerMono : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
-                InstantiateEntity(i, j);
+                Spawn(i, j);
             }
         }
+    }
+
+    public void Spawn(int x, int y)
+    {
+        Entity e = em.CreateEntity();
+
+        em.AddComponentData(e, new SpawnNeedComponent
+        {
+            x = x,
+            y = y
+        });
     }
 
     public void InstantiateFieldEntity(int width, int height)
@@ -71,13 +82,13 @@ public class SpawnerMono : MonoBehaviour
         
         em.SetComponentData(e, new Translation
         {
-            Value = position + new float3(0, 10, 0)
+            Value = new float3(position.x,  y * (spacing * Random.Range(1.3f, 1.5f)), 0)
         });
 
         em.AddComponentData(e, new FallComponent
         {
             position = position,
-            speed = 15 - position.y - Random.Range(0.1f, 0.5f)
+            speed = 10
         });
 
         em.AddComponentData(e, new JewelCell

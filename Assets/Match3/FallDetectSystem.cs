@@ -13,7 +13,6 @@ using UnityEngine;
 // 18 19 20 21 22 23
 
 
-
 public class FallDetectSystem : MySystem
 {
     private int width;
@@ -69,7 +68,7 @@ public class FallDetectSystem : MySystem
             {
                 int emptyY = -1;
                 
-                for (int y = 0; y < height; y++)
+                for (int y = height - 1; y >= 0; y--)
                 {
                     int index = GetIndex(x, y);
 
@@ -92,16 +91,27 @@ public class FallDetectSystem : MySystem
                         cb.AddComponent(e, new FallComponent
                         {
                             position = SpawnerMono.IndexToPosition(cell.x, emptyY),
-                            speed = 5
+                            speed = 10
                         });
                         
-                        emptyY++;
-
-                        
+                        emptyY--;
                     }
-                    
-                    
                 }
+
+                if (emptyY < height - 1 && emptyY != -1)
+                {
+                    for (int sy = emptyY; sy >= 0; sy--)
+                    {
+                        var entity = cb.CreateEntity();
+                        cb.AddComponent(entity, new SpawnNeedComponent
+                        {
+                            x = x,
+                            y = sy
+                        });
+                    }
+                }
+                
+                
             }
 
 
