@@ -82,7 +82,10 @@
      <Compile Include="Assets\Scenes\WaveData.cs" />
      <Compile Include="Assets\Scenes\WaveSystem.cs" />
      <Compile Include="Assets\TD\Components\AssignCurrentWaypointTag.cs" />
+<<<<<<< Updated upstream
      <Compile Include="Assets\TD\Components\BulletData.cs" />
+=======
+>>>>>>> Stashed changes
      <Compile Include="Assets\TD\Components\CurrentWaypointData.cs" />
      <Compile Include="Assets\TD\Components\DeadUnitData.cs" />
      <Compile Include="Assets\TD\Components\EnemyData.cs" />
@@ -90,6 +93,7 @@
      <Compile Include="Assets\TD\Components\RotateData.cs" />
      <Compile Include="Assets\TD\Components\StartWaypointTag.cs" />
      <Compile Include="Assets\TD\Components\TargetMovePositionData.cs" />
+<<<<<<< Updated upstream
      <Compile Include="Assets\TD\Components\TargetReachedData.cs" />
      <Compile Include="Assets\TD\Components\TowerData.cs" />
      <Compile Include="Assets\TD\Components\WaypointData.cs" />
@@ -100,6 +104,12 @@
      <Compile Include="Assets\TD\Systems\SpawnSystem.cs" />
      <Compile Include="Assets\TD\Systems\TargetMoveSystem.cs" />
      <Compile Include="Assets\TD\Systems\TowerFireSystem.cs" />
+=======
+     <Compile Include="Assets\TD\Components\WaypointData.cs" />
+     <Compile Include="Assets\TD\Systems\AssignMovePositionSystem.cs" />
+     <Compile Include="Assets\TD\Systems\RotateSystem.cs" />
+     <Compile Include="Assets\TD\Systems\SpawnSystem.cs" />
+>>>>>>> Stashed changes
      <Compile Include="Assets\TD\Systems\WaypointsMoveSystem.cs" />
      <Compile Include="Assets\TD\TDMain.cs" />
      <Compile Include="Assets\TD\utils\MySystem.cs" />
