@@ -9,8 +9,10 @@ public class TDMain : MonoBehaviour
 {
     static public  TDMain instance;
     public GameObject UnitPrefab;
+    public GameObject BulletPrefab;
 
     public Entity unitEntity;
+    public Entity bulletEntity;
 
 
     private World world;
@@ -31,15 +33,19 @@ public class TDMain : MonoBehaviour
 
         GameObjectConversionSettings settings = GameObjectConversionSettings.FromWorld(world, null);
         unitEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(UnitPrefab, settings);
+        bulletEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(BulletPrefab, settings);
 
         //entities bug workaround
         //https://forum.unity.com/threads/invalidoperationexception-object-is-not-initialized-or-has-already-been-destroyed.882484/
         
-        addSystem<AssignMovePositionSystem>();
+        //addSystem<AssignMovePositionSystem>();
         addSystem<EndReachedSystem>();
         addSystem<RotateSystem>();
         addSystem<SpawnSystem>();
+        addSystem<TowerFireSystem>();
+        addSystem<TargetMoveSystem>();
         addSystem<WaypointsMoveSystem>();
+        addSystem<BulletMoveSystem>();
         
         var ssg = world.GetOrCreateSystem<SimulationSystemGroup>();
         ssg.SortSystemUpdateList();

@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace TD.Components
 {
+    /*
     [DisableAutoCreation]
     public class AssignMovePositionSystem : SystemBase
     {
@@ -39,5 +40,5 @@ namespace TD.Components
                 }
             }).Run();
         }
-    }
+    }*/
 }

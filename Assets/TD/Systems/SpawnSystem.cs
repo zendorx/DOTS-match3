@@ -11,32 +11,27 @@ namespace TD.Components
     [DisableAutoCreation]
     public class SpawnSystem : SystemBase
     {
-        private float timer;
-        
-        protected override void OnCreate()
-        {
-            base.OnCreate();
-        }
-
         protected override void OnUpdate()
         {
-            timer -= Time.DeltaTime;
-            if (timer > 0)
-                return;
-            timer = 0.01f;
+            var dt = Time.DeltaTime;
 
             var entityPrefab = TDMain.instance.unitEntity;
 
             Entities.WithStructuralChanges().ForEach((
                 Entity srcEntity, 
-                in StartWaypointTag start, 
+                ref StartWaypointTag start, 
                 in Translation tr) =>
             {
-                
+
+                start.timer -= dt;
+                if (start.timer > 0)
+                    return;
+                start.timer = start.spawnTime/2;
                 var unit = EntityManager.Instantiate(entityPrefab);
                 
-                EntityManager.AddComponentData(unit, new RotateData{speed = 1});
-                EntityManager.AddComponentData(unit, new CurrentWaypointData{entity = srcEntity});
+                EntityManager.AddComponentData(unit, new RotateData{speed = 1, angle = Random.Range(0f, 3.14f)});
+                EntityManager.AddComponentData(unit, new Move2TargetData {entity = srcEntity, speed = 1}); 
+                EntityManager.AddComponentData(unit, new EnemyData());
 
                 EntityManager.SetComponentData(unit, new Translation{Value = new float3
                 {

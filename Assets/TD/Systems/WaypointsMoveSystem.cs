@@ -13,35 +13,25 @@ namespace TD.Components
         protected override void OnUpdate()
         {
             var dt = Time.DeltaTime;
-            
-            
-            var translations = GetComponentDataFromEntity<Translation>(true);
-            var waypoints = GetComponentDataFromEntity<WaypointData>(true);
 
+            var waypoints = GetComponentDataFromEntity<WaypointData>(true);
 
             var cb = createCommandBuffer();
             
             Entities
+                .WithAll<EnemyData>()
                 .WithoutBurst()
-                .ForEach((Entity entity, ref Translation posData, in CurrentWaypointData wp) =>
+                .ForEach((Entity entity, ref Move2TargetData targetData, in TargetReachedData targetReachedData) =>
             {
-                var targetTranslation = translations[wp.entity];
-                
-                var dir = posData.Value - targetTranslation.Value;
-                if (math.lengthsq(dir) < math.E)
+                var next = waypoints[targetData.entity].next;
+                if (next == Entity.Null)
                 {
-                    var next = waypoints[wp.entity].next;
-                    if (next == Entity.Null)
-                    {
-                        cb.AddComponent(entity, new ReachedEnd());
-                    }
-                    else
-                        wp.entity = next;
+                    cb.AddComponent(entity, new ReachedEnd());
                 }
                 else
                 {
-                    dir = math.normalize(dir) * dt * 10;
-                    posData.Value = posData.Value - dir;
+                    targetData.entity = next;
+                    cb.RemoveComponent(entity, typeof(TargetReachedData));
                 }
             }).Run();
         }

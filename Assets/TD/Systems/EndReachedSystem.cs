@@ -9,22 +9,21 @@ using Random = UnityEngine.Random;
 namespace TD.Components
 {
     [DisableAutoCreation]
-    [UpdateAfter(typeof(WaypointsMoveSystem))]
+    [UpdateBefore(typeof(EndSimulationEntityCommandBufferSystem))]
     public class EndReachedSystem : MySystem
     {
         private float timer;
         
         protected override void OnUpdate()
         {
-
             var cb = createCommandBuffer();
-
-            var entityPrefab = TDMain.instance.unitEntity;
 
             Entities.WithAll<ReachedEnd>().ForEach((
                 Entity entity) =>
             {
-                cb.DestroyEntity(entity);
+                //cb.DestroyEntity(entity);
+                
+                
             }).Run();
         }
     }
