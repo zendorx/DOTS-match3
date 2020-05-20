@@ -1,5 +1,6 @@
 ﻿using Unity.Collections;
 using Unity.Entities;
+using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
 
@@ -92,6 +93,107 @@ namespace TD.Components
                 }).Run();
 
             enemyEntities.Dispose();
+        }
+    }
+
+    [DisableAutoCreation]
+    public class TowerFireJobSystem : JobComponentSystem
+    {
+        private EndSimulationEntityCommandBufferSystem endSimulationEntityCommandBufferSystem;
+        
+        private struct EntityWithPosition
+        {
+            public Entity entity;
+            public float3 position;
+        }
+
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            endSimulationEntityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+        }
+
+
+        [RequireComponentTag(typeof(TowerData))]
+        private struct FindTargetJob: IJobForEachWithEntity<Translation>
+        {
+            [DeallocateOnJobCompletion]
+            [ReadOnly]
+            public NativeArray<EntityWithPosition> targetArray;
+            public EntityCommandBuffer.Concurrent entityCommandBuffer;
+
+            [ReadOnly]
+            public Entity bulletPrefabEntity;
+            
+            public void Execute(Entity entity, int index, [ReadOnly] ref Translation translation
+                //, ref TowerData towerData
+                )
+            {
+                Entity closestEntity = Entity.Null;
+                float closestDistance = 9999999f;
+
+                var towerPos = translation.Value;
+                for (int i = 0; i < targetArray.Length; ++i)
+                {
+                    var targetEntityWithPosition = targetArray[i];
+                    var dir = towerPos - targetEntityWithPosition.position;
+                    var dist = math.length(dir);
+                    if (dist > closestDistance)
+                        continue;
+                    closestDistance = dist;
+                    closestEntity = targetEntityWithPosition.entity;
+                };
+                    
+                if (closestEntity == Entity.Null)
+                    return;
+                    
+                
+                var bulletEntity = entityCommandBuffer.Instantiate(index, bulletPrefabEntity);
+                entityCommandBuffer.AddComponent(index, bulletEntity, new BulletData());
+                entityCommandBuffer.AddComponent(index, bulletEntity, new Move2TargetData{entity = closestEntity, speed = 1});
+                entityCommandBuffer.SetComponent(index, bulletEntity, translation);
+                
+            }
+        }
+        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        {
+            var query = new EntityQueryDesc
+            {
+                None = new ComponentType[]{typeof(DeadUnitData)},
+                All = new ComponentType[]{
+                    ComponentType.ReadOnly<EnemyData>(), 
+                    ComponentType.ReadOnly<Translation>()
+                    
+                }
+            };
+
+            var enemiesQuery = GetEntityQuery(query);
+            var targetEntityArray = enemiesQuery.ToEntityArray(Allocator.TempJob);
+            var translations = enemiesQuery.ToComponentDataArray<Translation>(Allocator.TempJob);
+            
+            var targetArray = new NativeArray<EntityWithPosition>(targetEntityArray.Length, Allocator.TempJob);
+            for (int i = 0; i < targetEntityArray.Length; ++i)
+            {
+                targetArray[i] = new EntityWithPosition
+                {
+                    entity = targetEntityArray[i],
+                    position = translations[i].Value
+                };
+            }
+
+            targetEntityArray.Dispose();
+            translations.Dispose();
+            
+            var job = new FindTargetJob
+            {
+                targetArray = targetArray, 
+                entityCommandBuffer = endSimulationEntityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
+                bulletPrefabEntity = TDMain.instance.bulletEntity
+            }.Schedule(this, inputDeps);
+            
+            endSimulationEntityCommandBufferSystem.AddJobHandleForProducer(job);
+            
+            return job;
         }
     }
 }

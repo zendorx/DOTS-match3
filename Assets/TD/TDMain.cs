@@ -43,6 +43,7 @@ public class TDMain : MonoBehaviour
         addSystem<RotateSystem>();
         addSystem<SpawnSystem>();
         addSystem<TowerFireSystem>();
+        addSystem<TowerFireJobSystem>();
         addSystem<TargetMoveSystem>();
         addSystem<WaypointsMoveSystem>();
         addSystem<BulletMoveSystem>();
