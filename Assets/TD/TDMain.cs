@@ -42,8 +42,8 @@ public class TDMain : MonoBehaviour
         addSystem<EndReachedSystem>();
         addSystem<RotateSystem>();
         addSystem<SpawnSystem>();
-        addSystem<TowerFireSystem>();
-        addSystem<TowerFireJobSystem>();
+        addSystem<ShootSystem>();
+        addSystem<ShootSystem>();
         addSystem<TargetMoveSystem>();
         addSystem<WaypointsMoveSystem>();
         addSystem<BulletMoveSystem>();
@@ -57,6 +57,7 @@ public class TDMain : MonoBehaviour
     {
         var ssg = world.GetOrCreateSystem<SimulationSystemGroup>();
         ssg.AddSystemToUpdateList(world.GetOrCreateSystem<T>());
+        ssg.SortSystemUpdateList();
     }
 
     // Update is called once per frame

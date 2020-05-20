@@ -3,7 +3,7 @@
 namespace TD.Components
 {
     [GenerateAuthoringComponent]
-    public struct TowerData : IComponentData
+    public struct ShooterData : IComponentData
     {
         public float timer;
         public float bulletSpeed;

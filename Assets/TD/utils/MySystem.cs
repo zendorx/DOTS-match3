@@ -4,10 +4,10 @@ namespace TD.Components
 {
     public abstract class MySystem : SystemBase
     {
-        private EndSimulationEntityCommandBufferSystem ss;
+        protected EndSimulationEntityCommandBufferSystem endSimulationSystem;
         protected override void OnCreate()
         {
-            ss = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+            endSimulationSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
             xCreate();
         }
 
@@ -15,7 +15,7 @@ namespace TD.Components
 
         protected EntityCommandBuffer createCommandBuffer()
         {
-            return ss.CreateCommandBuffer();
+            return endSimulationSystem.CreateCommandBuffer();
         }
     }
 }
