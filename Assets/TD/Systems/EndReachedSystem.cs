@@ -21,9 +21,7 @@ namespace TD.Components
             Entities.WithAll<ReachedEnd>().ForEach((
                 Entity entity) =>
             {
-                //cb.DestroyEntity(entity);
-                
-                
+                cb.DestroyEntity(entity);
             }).Run();
         }
     }

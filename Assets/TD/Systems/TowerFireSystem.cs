@@ -97,21 +97,14 @@ namespace TD.Components
     }
 
     [DisableAutoCreation]
-    public class TowerFireJobSystem : JobComponentSystem
+    public class TowerFireJobSystem : MySystem
     {
-        private EndSimulationEntityCommandBufferSystem endSimulationEntityCommandBufferSystem;
-        
         private struct EntityWithPosition
         {
             public Entity entity;
             public float3 position;
         }
 
-        protected override void OnCreate()
-        {
-            base.OnCreate();
-            endSimulationEntityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-        }
 
 
         [RequireComponentTag(typeof(TowerData))]
@@ -129,33 +122,11 @@ namespace TD.Components
                 //, ref TowerData towerData
                 )
             {
-                Entity closestEntity = Entity.Null;
-                float closestDistance = 9999999f;
-
-                var towerPos = translation.Value;
-                for (int i = 0; i < targetArray.Length; ++i)
-                {
-                    var targetEntityWithPosition = targetArray[i];
-                    var dir = towerPos - targetEntityWithPosition.position;
-                    var dist = math.length(dir);
-                    if (dist > closestDistance)
-                        continue;
-                    closestDistance = dist;
-                    closestEntity = targetEntityWithPosition.entity;
-                };
-                    
-                if (closestEntity == Entity.Null)
-                    return;
-                    
                 
-                var bulletEntity = entityCommandBuffer.Instantiate(index, bulletPrefabEntity);
-                entityCommandBuffer.AddComponent(index, bulletEntity, new BulletData());
-                entityCommandBuffer.AddComponent(index, bulletEntity, new Move2TargetData{entity = closestEntity, speed = 1});
-                entityCommandBuffer.SetComponent(index, bulletEntity, translation);
                 
             }
         }
-        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        protected override void OnUpdate()
         {
             var query = new EntityQueryDesc
             {
@@ -163,37 +134,47 @@ namespace TD.Components
                 All = new ComponentType[]{
                     ComponentType.ReadOnly<EnemyData>(), 
                     ComponentType.ReadOnly<Translation>()
-                    
                 }
             };
 
             var enemiesQuery = GetEntityQuery(query);
+            
             var targetEntityArray = enemiesQuery.ToEntityArray(Allocator.TempJob);
             var translations = enemiesQuery.ToComponentDataArray<Translation>(Allocator.TempJob);
             
-            var targetArray = new NativeArray<EntityWithPosition>(targetEntityArray.Length, Allocator.TempJob);
-            for (int i = 0; i < targetEntityArray.Length; ++i)
+            var cb = createCommandBuffer().ToConcurrent();
+            var bulletPrefabEntity = TDMain.instance.bulletEntity;
+
+            var j1 = Entities.ForEach((int entityInQueryIndex, Entity entity, in Translation translation, in TowerData towerData) =>
             {
-                targetArray[i] = new EntityWithPosition
+                Entity closestEntity = Entity.Null;
+                float closestDistance = 9999999f;
+
+                var towerPos = translation.Value;
+                for (int i = 0; i < targetEntityArray.Length; ++i)
                 {
-                    entity = targetEntityArray[i],
-                    position = translations[i].Value
-                };
-            }
+                    var dir = towerPos - translations[i].Value;
+                    var dist = math.length(dir);
+                    if (dist > closestDistance)
+                        continue;
+                    closestDistance = dist;
+                    closestEntity = targetEntityArray[i];
+                }
+
+                if (closestEntity == Entity.Null)
+                    return;
+
+                var bulletEntity = cb.Instantiate(entityInQueryIndex, bulletPrefabEntity);
+                cb.AddComponent(entityInQueryIndex, bulletEntity, new BulletData());
+                cb.AddComponent(entityInQueryIndex, bulletEntity,
+                    new Move2TargetData {entity = closestEntity, speed = towerData.bulletSpeed});
+                cb.SetComponent(entityInQueryIndex, bulletEntity, translation);
+            }).ScheduleParallel(Dependency);
+            
+            j1.Complete();
 
             targetEntityArray.Dispose();
             translations.Dispose();
-            
-            var job = new FindTargetJob
-            {
-                targetArray = targetArray, 
-                entityCommandBuffer = endSimulationEntityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
-                bulletPrefabEntity = TDMain.instance.bulletEntity
-            }.Schedule(this, inputDeps);
-            
-            endSimulationEntityCommandBufferSystem.AddJobHandleForProducer(job);
-            
-            return job;
         }
     }
 }
