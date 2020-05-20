@@ -4,6 +4,7 @@ using TD.Components;
 using Unity.Entities;
 using UnityEngine;
 
+[DisableAutoCreation]
 public class DestroySystem : MySystem
 {
     protected override void OnUpdate()

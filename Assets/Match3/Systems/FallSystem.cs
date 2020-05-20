@@ -7,6 +7,7 @@ using Unity.Transforms;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
+[DisableAutoCreation]
 public class FallSystem : SystemBase
 {
     public const int JobIndex = 10001;

@@ -5,7 +5,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 
-
+[DisableAutoCreation]
 public class Match3InputSystem : ComponentSystem
 {
     protected override void OnUpdate()
