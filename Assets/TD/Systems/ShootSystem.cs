@@ -7,7 +7,6 @@ using Unity.Transforms;
 namespace TD.Components
 {
     [DisableAutoCreation]
-    [UpdateBefore(typeof(EndSimulationEntityCommandBufferSystem))]
     public class ShootSystem : MySystem
     {
         protected override void OnUpdate()
@@ -29,7 +28,7 @@ namespace TD.Components
             var cb = createCommandBuffer().ToConcurrent();
             var bulletPrefabEntity = TDMain.instance.bulletEntity;
 
-            Dependency = Entities.ForEach((int entityInQueryIndex, Entity entity, in Translation translation, in ShooterData shooterData) =>
+            Entities.ForEach((int entityInQueryIndex, Entity entity, in Translation translation, in ShooterData shooterData) =>
             {
                 Entity closestEntity = Entity.Null;
                 float closestDistance = 9999999f;
@@ -49,13 +48,13 @@ namespace TD.Components
                     return;
 
                 var bulletEntity = cb.Instantiate(entityInQueryIndex, bulletPrefabEntity);
-                cb.AddComponent(entityInQueryIndex, bulletEntity, new BulletData());
+                cb.AddComponent(entityInQueryIndex, bulletEntity, new BulletData{damage = shooterData.damage});
                 cb.AddComponent(entityInQueryIndex, bulletEntity,
                     new Move2TargetData {entity = closestEntity, speed = shooterData.bulletSpeed});
                 cb.SetComponent(entityInQueryIndex, bulletEntity, translation);
             }).WithDeallocateOnJobCompletion(targetEntityArray)
                 .WithDeallocateOnJobCompletion(translations)
-                .ScheduleParallel(Dependency);
+                .ScheduleParallel();
             
             endSimulationSystem.AddJobHandleForProducer(Dependency);
 

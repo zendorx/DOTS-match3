@@ -9,20 +9,21 @@ using Random = UnityEngine.Random;
 namespace TD.Components
 {
     [DisableAutoCreation]
-    [UpdateBefore(typeof(EndSimulationEntityCommandBufferSystem))]
     public class EndReachedSystem : MySystem
     {
         private float timer;
         
         protected override void OnUpdate()
         {
-            var cb = createCommandBuffer();
+            var commandBuffer = new EntityCommandBuffer();
 
             Entities.WithAll<ReachedEnd>().ForEach((
                 Entity entity) =>
             {
-                cb.DestroyEntity(entity);
-            }).Run();
+                commandBuffer.DestroyEntity(entity);
+            }).ScheduleParallel();
+            Dependency.Complete();
+            commandBuffer.Playback(EntityManager);
         }
     }
 }

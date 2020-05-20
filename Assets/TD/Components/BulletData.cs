@@ -4,6 +4,6 @@ namespace TD.Components
 {
     public struct BulletData : IComponentData
     {
-        //public Entity target;
+        public float damage;
     }
 }

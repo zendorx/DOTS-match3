@@ -18,6 +18,7 @@ namespace TD.Components
             var cb = createCommandBuffer();
             
             Entities.WithNone<TargetReachedData>()
+                .WithAll<BulletData>()
                 .WithoutBurst()
                 .ForEach((Entity entity, ref Translation posData, in Move2TargetData targetData) =>
                 {

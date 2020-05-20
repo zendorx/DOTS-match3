@@ -23,7 +23,7 @@ namespace TD.Components
                 var newRotation = quaternion.identity;
                 rotateData.angle += rotateData.speed * dt;
                 rot.Value = quaternion.EulerXYZ(math.PI / 2, rotateData.angle, 0);
-            }).Run();
+            }).ScheduleParallel();
         }
     }
 }

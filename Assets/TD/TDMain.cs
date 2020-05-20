@@ -39,24 +39,21 @@ public class TDMain : MonoBehaviour
         //https://forum.unity.com/threads/invalidoperationexception-object-is-not-initialized-or-has-already-been-destroyed.882484/
         
         //addSystem<AssignMovePositionSystem>();
-        addSystem<EndReachedSystem>();
+        
         addSystem<RotateSystem>();
         addSystem<SpawnSystem>();
         addSystem<ShootSystem>();
-        addSystem<ShootSystem>();
         addSystem<TargetMoveSystem>();
+        addSystem<DamageSystem>();
         addSystem<WaypointsMoveSystem>();
         addSystem<BulletMoveSystem>();
-        addSystem<GridSystem>();
-        
-        var ssg = world.GetOrCreateSystem<SimulationSystemGroup>();
-        ssg.SortSystemUpdateList();
+        addSystem<EndReachedSystem>();
     }
 
     void addSystem<T>() where T : ComponentSystemBase
     {
-        var ssg = world.GetOrCreateSystem<SimulationSystemGroup>();
-        ssg.AddSystemToUpdateList(world.GetOrCreateSystem<T>());
+        var ssg = world.GetOrCreateSystem<Match3Group>();
+        ssg.AddSystem(world.GetOrCreateSystem<T>());
     }
 
     // Update is called once per frame
