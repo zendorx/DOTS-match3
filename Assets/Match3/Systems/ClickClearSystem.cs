@@ -4,7 +4,7 @@ using TD.Components;
 using Unity.Entities;
 using UnityEngine;
 
-[UpdateAfter(typeof(SelectSystem))]
+[DisableAutoCreation]
 public class ClickClearSystem : MySystem
 {
     protected override void OnUpdate()

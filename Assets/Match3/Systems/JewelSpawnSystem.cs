@@ -6,22 +6,23 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using Random = UnityEngine.Random;
 
-[UpdateAfter(typeof(FallDetectSystem))]
+[DisableAutoCreation]
 public class JewelSpawnSystem : MySystem
 {
     protected override void OnUpdate()
     {
         var cb = createCommandBuffer();
-
+        
         Entities.WithoutBurst().ForEach((Entity e, in SpawnNeedComponent spawn) =>
          {
              Entity jewelEntity = cb.Instantiate(JewelStaticPrefabs.heavy);
 
              float3 position = SpawnerMono.IndexToPosition(spawn.x, spawn.y);
              
+             
              cb.AddComponent(jewelEntity, new Translation
              {
-                 Value = new float3(position.x,  spawn.y * (SpawnerMono.spacing + 1.2f), 0)
+                 Value = new float3(position.x,  (5+spawn.y) * (SpawnerMono.spacing + 1.2f), 0)
              });
              
              cb.AddComponent(jewelEntity, new FallComponent

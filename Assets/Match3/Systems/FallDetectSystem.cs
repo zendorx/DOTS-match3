@@ -12,7 +12,7 @@ using UnityEngine;
 // 12 13 14 15 16 17
 // 18 19 20 21 22 23
 
-
+[DisableAutoCreation]
 public class FallDetectSystem : MySystem
 {
     private int width;
@@ -102,6 +102,7 @@ public class FallDetectSystem : MySystem
                 {
                     for (int sy = emptyY; sy >= 0; sy--)
                     {
+                        Debug.Log($"SPAWN FOR: {x},{sy}" );
                         var entity = cb.CreateEntity();
                         cb.AddComponent(entity, new SpawnNeedComponent
                         {

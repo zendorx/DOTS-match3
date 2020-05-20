@@ -6,6 +6,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
+[DisableAutoCreation]
 public class SelectSystem : SystemBase
 {
     protected EndSimulationEntityCommandBufferSystem ess;
