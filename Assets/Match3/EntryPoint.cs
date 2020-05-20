@@ -7,7 +7,20 @@ using UnityEngine;
 [UpdateInGroup(typeof(SimulationSystemGroup))]
 public class Match3Group : ComponentSystemGroup
 {
- 
+    public void AddSystem(ComponentSystemBase sys)
+    {
+        if (sys != null)
+        {
+            if (this == sys)
+                throw new ArgumentException($"Can't add {TypeManager.GetSystemName(GetType())} to its own update list");
+
+            // Check for duplicate Systems. Also see issue #1792
+            if (m_systemsToUpdate.IndexOf(sys) >= 0)
+                return;
+
+            m_systemsToUpdate.Add(sys);
+        }
+    }
 }
 
 
@@ -45,8 +58,8 @@ public class EntryPoint : MonoBehaviour
     
     void addSystem<T>() where T : ComponentSystemBase
     {
-        var ssg = world.GetOrCreateSystem<Match3Group>();
-        ssg.AddSystemToUpdateList(world.GetOrCreateSystem<T>());
+        Match3Group ssg = world.GetOrCreateSystem<Match3Group>();
+        ssg.AddSystem(world.GetOrCreateSystem<T>());
     }
 
 }
