@@ -57,7 +57,6 @@ public class TDMain : MonoBehaviour
     {
         var ssg = world.GetOrCreateSystem<SimulationSystemGroup>();
         ssg.AddSystemToUpdateList(world.GetOrCreateSystem<T>());
-        ssg.SortSystemUpdateList();
     }
 
     // Update is called once per frame
