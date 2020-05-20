@@ -46,6 +46,7 @@ public class TDMain : MonoBehaviour
         addSystem<TargetMoveSystem>();
         addSystem<WaypointsMoveSystem>();
         addSystem<BulletMoveSystem>();
+        addSystem<GridSystem>();
         
         var ssg = world.GetOrCreateSystem<SimulationSystemGroup>();
         ssg.SortSystemUpdateList();

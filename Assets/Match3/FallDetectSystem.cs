@@ -46,7 +46,7 @@ public class FallDetectSystem : MySystem
         
         EntityQuery eqCells = GetEntityQuery(ComponentType.ReadWrite<JewelCell>());
         EntityQuery eqField = GetEntityQuery(ComponentType.ReadOnly<FieldComponent>());
-
+        
         FieldComponent fieldComponent = eqField.GetSingleton<FieldComponent>();
         width = fieldComponent.width;
         height = fieldComponent.height;
