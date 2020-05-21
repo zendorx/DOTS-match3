@@ -13,7 +13,7 @@ namespace TD.Components
         {
             var query = new EntityQueryDesc
             {
-                None = new ComponentType[]{typeof(DeadUnitData)},
+                None = new ComponentType[]{typeof(DeadData)},
                 All = new ComponentType[]{
                     ComponentType.ReadOnly<EnemyData>(), 
                     ComponentType.ReadOnly<Translation>()

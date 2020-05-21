@@ -45,7 +45,7 @@ public class TDMain : MonoBehaviour
         addSystem<ShootSystem>();
         addSystem<TargetMoveSystem>();
         addSystem<DamageSystem>();
-        addSystem<WaypointsMoveSystem>();
+        addSystem<WaypointsMoveSystem>();  
         addSystem<BulletMoveSystem>();
         addSystem<EndReachedSystem>();
     }

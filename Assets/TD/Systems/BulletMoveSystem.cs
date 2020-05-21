@@ -12,10 +12,11 @@ namespace TD.Components
             
             Entities
                 .WithoutBurst()
-                .ForEach((int entityInQueryIndex, Entity srcEntity, ref BulletData bulletData, ref TargetReachedData targetReachedData, in Move2TargetData targetData) =>
+                .ForEach((int entityInQueryIndex, Entity srcEntity, 
+                    ref BulletData bulletData, ref TargetReachedData targetReachedData, in Move2TargetData targetData) =>
                 {
                     cb.DestroyEntity(entityInQueryIndex, srcEntity);
-                    cb.AddComponent(entityInQueryIndex, targetData.entity, new DeadUnitData());
+                    cb.AddComponent(entityInQueryIndex, targetData.entity, new DeadData());
                     //cb.AddComponent(targetData.entity, new SEtNa);
                 }).ScheduleParallel();
             

@@ -2,7 +2,7 @@
 
 namespace TD.Components
 {
-    public struct DeadUnitData : IComponentData
+    public struct DeadData : IComponentData
     {
     }
 }

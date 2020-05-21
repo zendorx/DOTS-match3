@@ -12,15 +12,14 @@ namespace TD.Components
             var cb = createCommandBuffer();
 
             var eq = GetComponentDataFromEntity<EnemyData>();
-            Entities.WithAll<TargetReachedData>().ForEach((
+            Entities.WithAll<TargetReachedData>().WithNone<DeadData>().ForEach((
                 Entity entity, in BulletData bulletData, in Move2TargetData targetData) =>
             {
-
                 var enemyData = eq[targetData.entity]; 
                 enemyData.hp -= bulletData.damage;
                 if (enemyData.hp > 0)
                     return;
-                cb.DestroyEntity(targetData.entity);
+                cb.AddComponent(targetData.entity, new DeadData());
                 
             }).Run();
         }
