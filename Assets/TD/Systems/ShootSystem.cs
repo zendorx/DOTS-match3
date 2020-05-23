@@ -28,30 +28,38 @@ namespace TD.Components
             var cb = createCommandBuffer().ToConcurrent();
             var bulletPrefabEntity = TDMain.instance.bulletEntity;
 
-            Entities.ForEach((int entityInQueryIndex, Entity entity, in Translation translation, in ShooterData shooterData) =>
-            {
-                Entity closestEntity = Entity.Null;
-                float closestDistance = 9999999f;
+            var dt = Time.DeltaTime;
 
-                var towerPos = translation.Value;
-                for (int i = 0; i < targetEntityArray.Length; ++i)
+            Entities.ForEach((int entityInQueryIndex, Entity entity, 
+                ref ShooterData shooterData, in Translation translation) =>
                 {
-                    var dir = towerPos - translations[i].Value;
-                    var dist = math.length(dir);
-                    if (dist > closestDistance)
-                        continue;
-                    closestDistance = dist;
-                    closestEntity = targetEntityArray[i];
-                }
+                    shooterData.timer -= dt;
+                    if (shooterData.timer > 0)
+                        return;
+                    shooterData.timer = shooterData.period/10;
+                    
+                    Entity closestEntity = Entity.Null;
+                    float closestDistance = 9999999f;
 
-                if (closestEntity == Entity.Null)
-                    return;
+                    var towerPos = translation.Value;
+                    for (int i = 0; i < targetEntityArray.Length; ++i)
+                    {
+                        var dir = towerPos - translations[i].Value;
+                        var dist = math.length(dir);
+                        if (dist > closestDistance)
+                            continue;
+                        closestDistance = dist;
+                        closestEntity = targetEntityArray[i];
+                    }
 
-                var bulletEntity = cb.Instantiate(entityInQueryIndex, bulletPrefabEntity);
-                cb.AddComponent(entityInQueryIndex, bulletEntity, new BulletData{damage = shooterData.damage});
-                cb.AddComponent(entityInQueryIndex, bulletEntity,
-                    new Move2TargetData {entity = closestEntity, speed = shooterData.bulletSpeed});
-                cb.SetComponent(entityInQueryIndex, bulletEntity, translation);
+                    if (closestEntity == Entity.Null)
+                        return;
+
+                    var bulletEntity = cb.Instantiate(entityInQueryIndex, bulletPrefabEntity);
+                    cb.AddComponent(entityInQueryIndex, bulletEntity, new BulletData{damage = shooterData.damage});
+                    cb.AddComponent(entityInQueryIndex, bulletEntity,
+                        new Move2TargetData {entity = closestEntity, speed = shooterData.bulletSpeed});
+                    cb.SetComponent(entityInQueryIndex, bulletEntity, translation);
             }).WithDeallocateOnJobCompletion(targetEntityArray)
                 .WithDeallocateOnJobCompletion(translations)
                 .ScheduleParallel();

@@ -23,6 +23,12 @@ namespace TD.Components
                 .WithoutBurst()
                 .ForEach((Entity entity, ref Translation posData, in Move2TargetData targetData) =>
                 {
+                    if (!translations.Exists(targetData.entity))
+                    {
+                        cb.AddComponent(entity, new DeadData());
+                        return;
+                    }
+
                     var targetTranslation = translations[targetData.entity];
                 
                     var dir = posData.Value - targetTranslation.Value;

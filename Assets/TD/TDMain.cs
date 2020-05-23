@@ -49,6 +49,7 @@ public class TDMain : MonoBehaviour
         addSystem<WaypointsMoveSystem>();  
         addSystem<BulletMoveSystem>();
         addSystem<EndReachedSystem>();
+        addSystem<DestroyDeadSystem>();
     }
 
     void addSystem<T>() where T : ComponentSystemBase

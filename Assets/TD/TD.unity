@@ -150,7 +150,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 281605672}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.33, y: 0, z: 8.99}
+  m_LocalPosition: {x: 3.62, y: 0, z: 13.1}
   m_LocalScale: {x: 2.6389, y: 2.6389, z: 2.6389}
   m_Children: []
   m_Father: {fileID: 508133849}
@@ -496,6 +496,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: 0
   spawnTime: 1
+  hp: 100
 --- !u!114 &680444378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1052,6 +1053,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: 0
   spawnTime: 2
+  hp: 30
 --- !u!1 &1151902375
 GameObject:
   m_ObjectHideFlags: 0
@@ -1081,7 +1083,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1151902375}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.99, y: 0, z: 4.76}
+  m_LocalPosition: {x: 6.16, y: 0, z: 5.9}
   m_LocalScale: {x: 2.6389, y: 2.6389, z: 2.6389}
   m_Children: []
   m_Father: {fileID: 508133849}
@@ -1561,6 +1563,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: 0
   spawnTime: 3
+  hp: 50
 --- !u!114 &1901324325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1696,8 +1699,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: 0
   bulletSpeed: 2
-  period: 1
-  damage: 1
+  period: 0.1
+  damage: 0.1
 --- !u!114 &2007727407
 MonoBehaviour:
   m_ObjectHideFlags: 0
