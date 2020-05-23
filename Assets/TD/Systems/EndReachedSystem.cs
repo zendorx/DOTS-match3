@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -15,12 +16,12 @@ namespace TD.Components
         
         protected override void OnUpdate()
         {
-            var commandBuffer = new EntityCommandBuffer();
+            var commandBuffer = new EntityCommandBuffer(Allocator.Temp, PlaybackPolicy.SinglePlayback);
 
             Entities.WithAll<ReachedEnd>().ForEach((
                 Entity entity) =>
             {
-                commandBuffer.DestroyEntity(entity);
+                //commandBuffer.DestroyEntity(entity);
             }).ScheduleParallel();
             Dependency.Complete();
             commandBuffer.Playback(EntityManager);

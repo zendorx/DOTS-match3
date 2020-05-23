@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -8,6 +9,7 @@ using UnityEngine;
 namespace TD.Components
 {
     [DisableAutoCreation]
+    //[AlwaysUpdateSystem]
     public class WaypointsMoveSystem : MySystem
     { 
         protected override void OnUpdate()
@@ -16,7 +18,7 @@ namespace TD.Components
 
             var waypoints = GetComponentDataFromEntity<WaypointData>(true);
 
-            var cb = createCommandBuffer();
+            var cb = new EntityCommandBuffer(Allocator.Temp, PlaybackPolicy.SinglePlayback);
             
             Entities
                 .WithAll<EnemyData>()
@@ -31,9 +33,11 @@ namespace TD.Components
                 else
                 {
                     targetData.entity = next;
-                    cb.RemoveComponent(entity, typeof(TargetReachedData));
+                    cb.RemoveComponent<TargetReachedData>(entity);
                 }
             }).Run();
+            
+            cb.Playback(EntityManager);
         }
     }
 }

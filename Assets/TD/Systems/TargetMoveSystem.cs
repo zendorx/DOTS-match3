@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -15,10 +16,10 @@ namespace TD.Components
             
             var translations = GetComponentDataFromEntity<Translation>(true);
 
-            var cb = createCommandBuffer();
+            var cb = new EntityCommandBuffer(Allocator.Temp, PlaybackPolicy.SinglePlayback);
+            
             
             Entities.WithNone<TargetReachedData>()
-                .WithAll<BulletData>()
                 .WithoutBurst()
                 .ForEach((Entity entity, ref Translation posData, in Move2TargetData targetData) =>
                 {
@@ -41,6 +42,8 @@ namespace TD.Components
                             posData.Value = posData.Value - step;
                     }
                 }).Run();
+            
+            cb.Playback(EntityManager);
         }
     }
 }

@@ -32,6 +32,7 @@ namespace TD.Components
                 EntityManager.AddComponentData(unit, new RotateData{speed = 1, angle = Random.Range(0f, 3.14f)});
                 EntityManager.AddComponentData(unit, new Move2TargetData {entity = srcEntity, speed = 1}); 
                 EntityManager.AddComponentData(unit, new EnemyData{hp = 10});
+                EntityManager.AddBuffer<ApplyDamageData>(unit);
 
                 EntityManager.SetComponentData(unit, new Translation{Value = new float3
                 {
