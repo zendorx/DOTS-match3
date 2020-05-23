@@ -15,7 +15,7 @@ namespace TD.Components
         {
             var dt = Time.DeltaTime;
 
-            var entityPrefab = TDMain.instance.unitEntity;
+            //var entityPrefab = TDMain.instance.unitEntity;
 
             Entities.WithStructuralChanges().ForEach((
                 Entity srcEntity, 
@@ -27,7 +27,9 @@ namespace TD.Components
                 if (start.timer > 0)
                     return;
                 start.timer = start.spawnTime/2;
-                var unit = EntityManager.Instantiate(entityPrefab);
+
+                var unitEntityController = GameObject.Instantiate(TDMain.instance.UnitPrefab).GetComponent<UnitEntityController>();
+                var unit = unitEntityController.entity;
                 
                 EntityManager.AddComponentData(unit, new RotateData{speed = 1, angle = Random.Range(0f, 3.14f)});
                 EntityManager.AddComponentData(unit, new Move2TargetData {entity = srcEntity, speed = 1}); 

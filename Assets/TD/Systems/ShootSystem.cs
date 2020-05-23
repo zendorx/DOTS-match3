@@ -30,7 +30,7 @@ namespace TD.Components
 
             var dt = Time.DeltaTime;
 
-            Entities.ForEach((int entityInQueryIndex, Entity entity, 
+            Entities.WithBurst().ForEach((int entityInQueryIndex, Entity entity, 
                 ref ShooterData shooterData, in Translation translation) =>
                 {
                     shooterData.timer -= dt;

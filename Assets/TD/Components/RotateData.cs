@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Unity.Entities;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace TD.Components
@@ -10,5 +11,6 @@ namespace TD.Components
     {
         public float speed;
         public float angle;
+        public quaternion dir;
     }
 }

@@ -20,9 +20,11 @@ namespace TD.Components
             var dt = Time.DeltaTime;
             Entities.ForEach((ref Rotation rot, ref RotateData rotateData) =>
             {
+                /*
                 var newRotation = quaternion.identity;
                 rotateData.angle += rotateData.speed * dt;
                 rot.Value = quaternion.EulerXYZ(math.PI / 2, rotateData.angle, 0);
+                */
             }).ScheduleParallel();
         }
     }

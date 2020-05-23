@@ -18,10 +18,11 @@ namespace TD.Components
 
             var cb = new EntityCommandBuffer(Allocator.Temp, PlaybackPolicy.SinglePlayback);
             
-            
+            //EntityManager.SetSharedComponentData();
+
             Entities.WithNone<TargetReachedData>()
                 .WithoutBurst()
-                .ForEach((Entity entity, ref Translation posData, in Move2TargetData targetData) =>
+                .ForEach((Entity entity, ref Translation posData, ref Rotation rotation, in Move2TargetData targetData) =>
                 {
                     if (!translations.Exists(targetData.entity))
                     {
@@ -30,7 +31,7 @@ namespace TD.Components
                     }
 
                     var targetTranslation = translations[targetData.entity];
-                
+
                     var dir = posData.Value - targetTranslation.Value;
                     if (math.length(dir) < 0.01f)
                     {
@@ -38,14 +39,29 @@ namespace TD.Components
                     }
                     else
                     {
-                        var step = math.normalize(dir) * dt * 10 * targetData.speed;
+                        var norm = math.normalize(dir);
+                        var step = norm * dt * 10 * targetData.speed;
+                        
                         if (math.length(dir) < math.length(step))
                         {
                             posData.Value = targetTranslation.Value;
                             cb.AddComponent(entity, new TargetReachedData());
                         }
                         else
+                        {
                             posData.Value = posData.Value - step;
+                            
+                            var rot = quaternion.LookRotation(-norm, new float3(0,1,0));
+                            //var face = quaternion.Euler(0,0,math.PI/2);
+                            //var face = quaternion.Euler(-math.PI/2, math.PI/2, math.PI/2);
+                            //var face = quaternion.Euler(0,0,math.PI/2);
+                            //rot = quaternion.AxisAngle(norm, 0);
+                        
+                            //rot = math.mul(rot, z);
+                            //quaternion.LookRotation()
+                            //rotation.Value = math.mul(face, rot);
+                            rotation.Value = rot;
+                        }
                     }
                 }).Run();
             

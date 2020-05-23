@@ -11,7 +11,7 @@ public class TDMain : MonoBehaviour
     public GameObject UnitPrefab;
     public GameObject BulletPrefab;
 
-    public Entity unitEntity;
+    //public Entity unitEntity;
     public Entity bulletEntity;
 
 
@@ -32,7 +32,7 @@ public class TDMain : MonoBehaviour
         world = World.DefaultGameObjectInjectionWorld;
 
         GameObjectConversionSettings settings = GameObjectConversionSettings.FromWorld(world, null);
-        unitEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(UnitPrefab, settings);
+        //unitEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(UnitPrefab, settings);
         bulletEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(BulletPrefab, settings);
 
         //entities bug workaround
@@ -40,10 +40,10 @@ public class TDMain : MonoBehaviour
         
         //addSystem<AssignMovePositionSystem>();
         
-        addSystem<RotateSystem>();
         addSystem<SpawnSystem>();
         addSystem<ShootSystem>();
         addSystem<TargetMoveSystem>();
+        addSystem<RotateSystem>();
         addSystem<CollectDamageSystem>();
         addSystem<ApplyDamageSystem>();
         addSystem<WaypointsMoveSystem>();  
