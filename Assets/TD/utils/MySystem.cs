@@ -9,6 +9,7 @@ namespace TD.Components
         {
             endSimulationSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
             xCreate();
+
         }
 
         protected virtual void xCreate(){}
