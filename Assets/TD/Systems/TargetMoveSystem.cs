@@ -21,12 +21,13 @@ namespace TD.Components
             //EntityManager.SetSharedComponentData();
 
             Entities.WithNone<TargetReachedData>()
+                .WithNone<DeadData>()
                 .WithoutBurst()
                 .ForEach((Entity entity, ref Translation posData, ref Rotation rotation, in Move2TargetData targetData) =>
                 {
                     if (!translations.Exists(targetData.entity))
                     {
-                        cb.AddComponent(entity, new DeadData());
+                        cb.AddComponent(entity, new DeadData{duration = 1.5f});
                         return;
                     }
 

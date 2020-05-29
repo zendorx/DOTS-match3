@@ -26,8 +26,8 @@ namespace TD.Components
                 enemyData.hp -= value;
                 if (enemyData.hp <= 0)
                 {
-                    //cb.AddComponent(entity, new DeadData());
-                    cb.DestroyEntity(entity);
+                    cb.AddComponent(entity, new DeadData{duration = 1.5f});
+                    //cb.DestroyEntity(entity);
                 }
             }).Run();
             

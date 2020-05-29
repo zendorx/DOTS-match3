@@ -20,7 +20,7 @@ namespace TD.Components
                 if (!EntityManager.Exists(targetData.entity))
                     return;
                 
-                cb.AddComponent(entity, new DeadData());
+                cb.AddComponent(entity, new DeadData{duration = 0});
                 damages[targetData.entity].Add(new ApplyDamageData{value = bulletData.damage});
             }).Run();
             

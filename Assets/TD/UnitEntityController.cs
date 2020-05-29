@@ -1,4 +1,5 @@
 ﻿using System;
+using TD.Components;
 using Unity.Entities;
 using Unity.Transforms;
 using UnityEngine;
@@ -32,6 +33,21 @@ namespace TD
             
             var rotation = em.GetComponentData<Rotation>(entity);
             transform.rotation = rotation.Value;
+            
+            
+
+            if (em.HasComponent<DeadData>(entity))
+            {
+                Animator.Play("death");
+            }
+            else
+            {
+                var attacking = em.HasComponent<AttackingData>(entity);
+                if (attacking)
+                {
+                    Animator.Play("attack1");
+                }
+            }
         }
     }
 }

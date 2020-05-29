@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Rendering;
 using Unity.Transforms;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -11,6 +12,14 @@ namespace TD.Components
     [DisableAutoCreation]
     public class SpawnSystem : SystemBase
     {
+        protected override void OnCreate()
+        {
+            Entities.WithStructuralChanges().ForEach((Entity entity, WaypointData wp) =>
+            {
+                EntityManager.RemoveComponent<RenderMesh>(entity);
+            }).Run();
+        }
+
         protected override void OnUpdate()
         {
             var dt = Time.DeltaTime;

@@ -40,6 +40,7 @@ public class TDMain : MonoBehaviour
         
         //addSystem<AssignMovePositionSystem>();
         
+        
         addSystem<SpawnSystem>();
         addSystem<ShootSystem>();
         addSystem<TargetMoveSystem>();
@@ -48,6 +49,7 @@ public class TDMain : MonoBehaviour
         addSystem<ApplyDamageSystem>();
         addSystem<WaypointsMoveSystem>();  
         addSystem<BulletMoveSystem>();
+        addSystem<AttackBuildingSystem>();
         addSystem<EndReachedSystem>();
         addSystem<DestroyDeadSystem>();
     }
