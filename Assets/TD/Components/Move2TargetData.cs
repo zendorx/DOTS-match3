@@ -2,6 +2,7 @@
 
 namespace TD.Components
 {
+    [GenerateAuthoringComponent]
     public struct Move2TargetData : IComponentData
     {
         public Entity entity;

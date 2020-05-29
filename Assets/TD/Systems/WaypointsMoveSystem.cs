@@ -21,10 +21,12 @@ namespace TD.Components
             var cb = new EntityCommandBuffer(Allocator.Temp, PlaybackPolicy.SinglePlayback);
             
             Entities
-                .WithAll<EnemyData>()
+                //.WithAll<EnemyData>()
                 .WithoutBurst()
                 .ForEach((Entity entity, ref Move2TargetData targetData, in TargetReachedData targetReachedData) =>
             {
+                if (!waypoints.Exists(targetData.entity))
+                    return;
                 var next = waypoints[targetData.entity].next;
                 if (next == Entity.Null)
                 {
