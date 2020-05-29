@@ -31,9 +31,12 @@ namespace TD.Components
                         return;
                     }
 
-                    var targetTranslation = translations[targetData.entity];
+                    var targetTranslation = translations[targetData.entity].Value;
 
-                    var dir = posData.Value - targetTranslation.Value;
+                    targetTranslation.y += targetData.voffset;
+                    
+
+                    var dir = posData.Value - targetTranslation;
                     if (math.length(dir) < 0.01f)
                     {
                         cb.AddComponent(entity, new TargetReachedData());
@@ -45,7 +48,7 @@ namespace TD.Components
                         
                         if (math.length(dir) < math.length(step))
                         {
-                            posData.Value = targetTranslation.Value;
+                            posData.Value = targetTranslation;
                             cb.AddComponent(entity, new TargetReachedData());
                         }
                         else

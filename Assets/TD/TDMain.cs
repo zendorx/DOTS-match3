@@ -42,7 +42,7 @@ public class TDMain : MonoBehaviour
         
         
         addSystem<SpawnSystem>();
-        addSystem<ShootSystem>();
+        addSystem<SpawnShootSystem>();
         addSystem<TargetMoveSystem>();
         addSystem<RotateSystem>();
         addSystem<CollectDamageSystem>();

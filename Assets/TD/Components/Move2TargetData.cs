@@ -6,5 +6,6 @@ namespace TD.Components
     {
         public Entity entity;
         public float speed;
+        public float voffset;
     }
 }

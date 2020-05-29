@@ -9,5 +9,6 @@ namespace TD.Components
         public float bulletSpeed;
         public float period;
         public float damage;
+        public float range;
     }
 }

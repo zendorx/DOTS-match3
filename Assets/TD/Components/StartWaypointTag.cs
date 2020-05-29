@@ -11,6 +11,7 @@ namespace TD.Components
         public float timer;
         public float spawnTime;
         public float hp;
+        public float moveSpeed;
     }
     
     public struct ReachedEnd : IComponentData

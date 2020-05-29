@@ -29,6 +29,7 @@ namespace TD.Components
             Entities.WithStructuralChanges().ForEach((
                 Entity srcEntity, 
                 ref StartWaypointTag start, 
+                in WaypointData wp,
                 in Translation tr) =>
             {
 
@@ -41,13 +42,14 @@ namespace TD.Components
                 var unit = unitEntityController.entity;
                 
                 EntityManager.AddComponentData(unit, new RotateData{speed = 1, angle = Random.Range(0f, 3.14f)});
-                EntityManager.AddComponentData(unit, new Move2TargetData {entity = srcEntity, speed = 1}); 
+                EntityManager.AddComponentData(unit, new Move2TargetData {entity = wp.next, speed = start.moveSpeed/3, voffset = -0.5f}); 
                 EntityManager.AddComponentData(unit, new EnemyData{hp = start.hp});
                 EntityManager.AddBuffer<ApplyDamageData>(unit);
 
                 EntityManager.SetComponentData(unit, new Translation{Value = new float3
                 {
                     x = tr.Value.x + Random.Range(-1, 2),
+                    y = tr.Value.y - 0.5f,
                     z = tr.Value.z + Random.Range(-1, 2)
                 }});
             }).Run();
