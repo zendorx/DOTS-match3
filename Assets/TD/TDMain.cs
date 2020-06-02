@@ -31,7 +31,8 @@ public class TDMain : MonoBehaviour
         var em = World.DefaultGameObjectInjectionWorld.EntityManager;
         world = World.DefaultGameObjectInjectionWorld;
 
-        GameObjectConversionSettings settings = GameObjectConversionSettings.FromWorld(world, null);
+        var blob = new BlobAssetStore();
+        GameObjectConversionSettings settings = GameObjectConversionSettings.FromWorld(world, blob);
         //unitEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(UnitPrefab, settings);
         bulletEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(BulletPrefab, settings);
 

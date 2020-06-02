@@ -62,7 +62,7 @@ namespace TD.Components
                     var dmg = shooterData.damage/5f; 
                     dmg = math.clamp(dmg, 0f, 1f);
                     var scale = math.lerp(0.1f, 2f, dmg);
-                    cb.SetComponent(entityInQueryIndex, bulletEntity, new NonUniformScale{Value = scale});
+                    //cb.SetComponent(entityInQueryIndex, bulletEntity, new Scale{Value = scale});
                     cb.AddComponent(entityInQueryIndex, bulletEntity, new BulletData{damage = shooterData.damage});
                     cb.AddComponent(entityInQueryIndex, bulletEntity,
                         new Move2TargetData {entity = closestEntity, speed = shooterData.bulletSpeed, voffset = 1.5f});
