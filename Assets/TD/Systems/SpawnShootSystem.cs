@@ -31,7 +31,7 @@ namespace TD.Components
             var dt = Time.DeltaTime;
 
             Entities.WithBurst().ForEach((int entityInQueryIndex, Entity entity, 
-                ref ShooterData shooterData, in Translation translation) =>
+                ref ShooterData shooterData, in LocalToWorld l2w) =>
                 {
                     shooterData.timer -= dt;
                     if (shooterData.timer > 0)
@@ -41,7 +41,7 @@ namespace TD.Components
                     Entity closestEntity = Entity.Null;
                     float closestDistance = 9999999f;
 
-                    var towerPos = translation.Value;
+                    var towerPos = l2w.Position;
                     for (int i = 0; i < targetEntityArray.Length; ++i)
                     {
                         var dir = towerPos - translations[i].Value;
@@ -66,7 +66,7 @@ namespace TD.Components
                     cb.AddComponent(entityInQueryIndex, bulletEntity, new BulletData{damage = shooterData.damage});
                     cb.AddComponent(entityInQueryIndex, bulletEntity,
                         new Move2TargetData {entity = closestEntity, speed = shooterData.bulletSpeed, voffset = 1.5f});
-                    cb.SetComponent(entityInQueryIndex, bulletEntity, translation);
+                    cb.SetComponent(entityInQueryIndex, bulletEntity, new Translation{Value = towerPos});
             }).WithDeallocateOnJobCompletion(targetEntityArray)
                 .WithDeallocateOnJobCompletion(translations)
                 .ScheduleParallel();

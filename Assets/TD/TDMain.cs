@@ -57,7 +57,7 @@ public class TDMain : MonoBehaviour
     void addSystem<T>() where T : ComponentSystemBase
     {
         var ssg = world.GetOrCreateSystem<Match3Group>();
-        ssg.AddSystem(world.GetOrCreateSystem<T>());
+        ssg.AddSystemToUpdateList(world.GetOrCreateSystem<T>());
     }
 
     // Update is called once per frame
