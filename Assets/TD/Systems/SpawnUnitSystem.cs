@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Physics;
 using Unity.Rendering;
 using Unity.Transforms;
 using UnityEngine;
@@ -10,7 +11,7 @@ using Random = UnityEngine.Random;
 namespace TD.Components
 {
     [DisableAutoCreation]
-    public class SpawnSystem : SystemBase
+    public class SpawnUnitSystem : SystemBase
     {
         protected override void OnCreate()
         {
@@ -44,6 +45,7 @@ namespace TD.Components
                 EntityManager.AddComponentData(unit, new RotateData{speed = 1, angle = Random.Range(0f, 3.14f)});
                 EntityManager.AddComponentData(unit, new Move2TargetData {entity = wp.next, speed = start.moveSpeed/3, voffset = -0.5f}); 
                 EntityManager.AddComponentData(unit, new EnemyData{hp = start.hp});
+                //EntityManager.AddComponentData(unit, new PhysicsCollider());
                 EntityManager.AddBuffer<ApplyDamageData>(unit);
 
                 EntityManager.SetComponentData(unit, new Translation{Value = new float3

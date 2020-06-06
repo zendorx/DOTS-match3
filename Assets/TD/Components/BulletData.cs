@@ -6,4 +6,9 @@ namespace TD.Components
     {
         public float damage;
     }
+    
+    public struct MoveColliderWithUnit : IComponentData
+    {
+        public float damage;
+    }
 }

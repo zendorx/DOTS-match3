@@ -10911,7 +10911,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entity: {fileID: 842994451}
-  speed: 1
+  speed: 0.1
   voffset: 0
 --- !u!1001 &1500069761
 PrefabInstance:
@@ -14386,7 +14386,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3001992789257014, guid: 2ddea50d2a8c0c94eac0184e8e341496, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 81.41
+      value: 72.48
       objectReference: {fileID: 0}
     - target: {fileID: 3001992789257014, guid: 2ddea50d2a8c0c94eac0184e8e341496, type: 3}
       propertyPath: m_LocalPosition.y
@@ -14394,7 +14394,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3001992789257014, guid: 2ddea50d2a8c0c94eac0184e8e341496, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 40.52
+      value: 26.21
       objectReference: {fileID: 0}
     - target: {fileID: 3001992789257014, guid: 2ddea50d2a8c0c94eac0184e8e341496, type: 3}
       propertyPath: m_LocalRotation.x
@@ -14432,6 +14432,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bullet
+      objectReference: {fileID: 0}
+    - target: {fileID: 5825579077150495328, guid: 2ddea50d2a8c0c94eac0184e8e341496,
+        type: 3}
+      propertyPath: m_MotionType
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -2454228450876934971, guid: 2ddea50d2a8c0c94eac0184e8e341496, type: 3}

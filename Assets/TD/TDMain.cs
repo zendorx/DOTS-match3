@@ -42,14 +42,14 @@ public class TDMain : MonoBehaviour
         //addSystem<AssignMovePositionSystem>();
         
         
-        addSystem<SpawnSystem>();
+        addSystem<SpawnUnitSystem>();
         addSystem<SpawnShootSystem>();
         addSystem<TargetMoveSystem>();
         addSystem<RotateSystem>();
         addSystem<CollectDamageSystem>();
         addSystem<ApplyDamageSystem>();
         addSystem<WaypointsMoveSystem>();  
-        addSystem<BulletMoveSystem>();
+        addSystem<MakeDynamicBodySystem>();
         addSystem<AttackBuildingSystem>();
         addSystem<EndReachedSystem>();
         addSystem<DestroyDeadSystem>();
